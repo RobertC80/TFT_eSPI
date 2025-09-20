@@ -100,23 +100,22 @@ void TFT_eSPI::loadFont(String fontName, bool flash)
   if (fontName == "") fs_font = false;
   else { fontPtr = nullptr; fs_font = true; }
 
-  if (fs_font) {
-    spiffs = flash; // true if font is in SPIFFS
+if (fs_font) {
+  fontFS = fontFS;  // folosește ce e definit în User_Setup.h
+  spiffs = false;   // SPIFFS dezactivat
 
-    if(spiffs) fontFS = SPIFFS;
-
-    // Avoid a crash on the ESP32 if the file does not exist
-    if (fontFS.exists("/" + fontName + ".vlw") == false) {
-      Serial.println("Font file " + fontName + " not found!");
-      return;
-    }
-
-    fontFile = fontFS.open( "/" + fontName + ".vlw", "r");
-
-    if(!fontFile) return;
-
-    fontFile.seek(0, fs::SeekSet);
+  if (!fontFS.exists("/" + fontName + ".vlw")) {
+    Serial.println("Font file " + fontName + " not found!");
+    return;
   }
+
+  fontFile = fontFS.open("/" + fontName + ".vlw", "r");
+
+  if (!fontFile) return;
+
+  fontFile.seek(0, fs::SeekSet);
+}
+
 #else
   // Avoid unused varaible warning
   fontName = fontName;
