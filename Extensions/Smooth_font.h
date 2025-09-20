@@ -51,6 +51,7 @@ fontMetrics gFont = { nullptr, 0, 0, 0, 0, 0, 0, 0 };
   bool     fontFile = true;
 #endif
 
+
   private:
 
   void     loadMetrics(void);
