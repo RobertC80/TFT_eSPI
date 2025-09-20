@@ -148,11 +148,11 @@ SPI3_HOST = 2
 
 // If smooth font is used then it is likely SPIFFS will be needed
 #ifdef SMOOTH_FONT
-  // Call up the SPIFFS (SPI FLASH Filing System) for the anti-aliased fonts
   #define FS_NO_GLOBALS
   #include <FS.h>
-  #include "SPIFFS.h" // ESP32 only
+  #include <LittleFS.h>
   #define FONT_FS_AVAILABLE
+  #define fontFS LittleFS
 #endif
 
 ////////////////////////////////////////////////////////////////////////////////////////
